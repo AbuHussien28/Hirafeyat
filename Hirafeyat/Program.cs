@@ -1,4 +1,5 @@
 using Hirafeyat.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace Hirafeyat
@@ -13,6 +14,14 @@ namespace Hirafeyat
             builder.Services.AddControllersWithViews();
             builder.Services.AddDbContext<HirafeyatContext>(options =>
              options.UseSqlServer(builder.Configuration.GetConnectionString("CS")));
+            builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options => 
+            {
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequiredLength = 6;
+                options.Password.RequireDigit = false;
+            })
+                .AddEntityFrameworkStores<HirafeyatContext>()
+                .AddDefaultTokenProviders();
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -27,7 +36,8 @@ namespace Hirafeyat
             app.MapStaticAssets();
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}")
+                pattern: "{controller=Account}/{action=Login}")
+                //pattern: "{controller=Home}/{action=Index}/{id?}")
                 .WithStaticAssets();
 
             app.Run();
