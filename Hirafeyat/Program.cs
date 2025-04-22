@@ -1,4 +1,7 @@
 using Hirafeyat.Models;
+using Hirafeyat.SellerServices;
+using Hirafeyat.Services;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace Hirafeyat
@@ -12,7 +15,11 @@ namespace Hirafeyat
             // Add services to the container.
             builder.Services.AddControllersWithViews();
             builder.Services.AddDbContext<HirafeyatContext>(options =>
-             options.UseSqlServer(builder.Configuration.GetConnectionString("CS")));
+           // add dbcontext
+            options.UseSqlServer(builder.Configuration.GetConnectionString("CS")));
+          builder.Services.AddIdentity<ApplicationUser,IdentityRole>().AddEntityFrameworkStores<HirafeyatContext>().AddDefaultTokenProviders();
+            //regester service
+            builder.Services.AddScoped<IOrderService, OrderService>();
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -21,7 +28,7 @@ namespace Hirafeyat
                 app.UseExceptionHandler("/Home/Error");
             }
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapStaticAssets();

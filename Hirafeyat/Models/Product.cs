@@ -21,8 +21,8 @@ namespace Hirafeyat.Models
         // Foreign Keys
         public int CategoryId { get; set; }
         public Category Category { get; set; }
-
-        public int SellerId { get; set; }
+//was int now string
+        public string SellerId { get; set; }
         public ApplicationUser Seller { get; set; }
 
         // Navigation
