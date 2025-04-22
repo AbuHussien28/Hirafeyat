@@ -15,9 +15,15 @@ namespace Hirafeyat
             // Add services to the container.
             builder.Services.AddControllersWithViews();
             builder.Services.AddDbContext<HirafeyatContext>(options =>
-           // add dbcontext
-            options.UseSqlServer(builder.Configuration.GetConnectionString("CS")));
-          builder.Services.AddIdentity<ApplicationUser,IdentityRole>().AddEntityFrameworkStores<HirafeyatContext>().AddDefaultTokenProviders();
+             options.UseSqlServer(builder.Configuration.GetConnectionString("CS")));
+            builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options => 
+            {
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequiredLength = 6;
+                options.Password.RequireDigit = false;
+            })
+                .AddEntityFrameworkStores<HirafeyatContext>()
+                .AddDefaultTokenProviders();
             //regester service
             builder.Services.AddScoped<IOrderService, OrderService>();
             var app = builder.Build();
@@ -34,7 +40,8 @@ namespace Hirafeyat
             app.MapStaticAssets();
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}")
+                pattern: "{controller=Account}/{action=Login}")
+                //pattern: "{controller=Home}/{action=Index}/{id?}")
                 .WithStaticAssets();
 
             app.Run();
