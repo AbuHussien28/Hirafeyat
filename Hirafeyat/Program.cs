@@ -1,4 +1,6 @@
 using Hirafeyat.Models;
+using Hirafeyat.SellerServices;
+using Hirafeyat.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -22,6 +24,8 @@ namespace Hirafeyat
             })
                 .AddEntityFrameworkStores<HirafeyatContext>()
                 .AddDefaultTokenProviders();
+            //regester service
+            builder.Services.AddScoped<IOrderService, OrderService>();
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -30,7 +34,7 @@ namespace Hirafeyat
                 app.UseExceptionHandler("/Home/Error");
             }
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapStaticAssets();
