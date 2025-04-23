@@ -15,6 +15,8 @@ namespace Hirafeyat.Models
         public decimal Price { get; set; }
 
         public string ImageUrl { get; set; }
+        [Required]
+        public int Quentity { get; set; }
 
         public DateTime CreatedAt { get; set; } = DateTime.Now;
 

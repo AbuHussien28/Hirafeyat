@@ -26,6 +26,10 @@ namespace Hirafeyat
                 .AddDefaultTokenProviders();
             //regester service
             builder.Services.AddScoped<IOrderService, OrderService>();
+            builder.Services.AddScoped<IProductRepository, ProductService>();
+            builder.Services.AddScoped<ICategoryRepository, CategoryService>();
+
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
