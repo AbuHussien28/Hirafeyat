@@ -10,5 +10,7 @@ namespace Hirafeyat.Models
         public ICollection<Product> Products { get; set; }
         public ICollection<Order> Orders { get; set; }
 
+        public string brand_name { get; set; }
+
     }
 }

@@ -10,7 +10,7 @@ namespace Hirafeyat.Services
         void UpdateOrderStatus(int orderId, OrderStatus newStatus);
        
 
-        int Save();
+        void Save();
 
 
     }
