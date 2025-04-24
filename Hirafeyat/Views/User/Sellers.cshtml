@@ -1,0 +1,89 @@
+﻿@model X.PagedList.IPagedList<Hirafeyat.ViewModel.Admin.UserSellerAdminViewModel>
+
+@{
+    ViewData["Title"] = "Sellers";
+}
+
+<h1>Sellers</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @* @Html.DisplayNameFor(model => model[0].UserName) *@
+                @Html.DisplayName("UserName")
+            </th>
+            <th>
+                @* @Html.DisplayNameFor(model => model[0].Email) *@
+                @Html.DisplayName("Email")
+            </th>
+            <th>
+                @* @Html.DisplayNameFor(model => model[0].FullName) *@
+                @Html.DisplayName("Full Name")
+            </th>
+            <th>
+                @* @Html.DisplayNameFor(model => model[0].PhoneNumber) *@
+                @Html.DisplayName("Phone Number")
+            </th>
+            <th>
+                @* @Html.DisplayNameFor(model => model[0].ProfileImage) *@
+                @Html.DisplayName("Profile Image")
+            </th>
+            <th>
+                @* @Html.DisplayNameFor(model => model[0].Address) *@
+                @Html.DisplayName("Address")
+            </th>
+            <th>
+                @* @Html.DisplayNameFor(model => model[0].IsActive) *@
+                @Html.DisplayName("Is Active")
+            </th>
+            <th>
+                @* @Html.DisplayNameFor(model => model[0].AccountCreatedDate) *@
+                @Html.DisplayName("Account Created Date")
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FullName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PhoneNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProfileImage)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Address)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsActive)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AccountCreatedDate)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            </td>
+        </tr>
+}
+    </tbody>
+    @await Html.PartialAsync("_PaginationPartial", Model)
+    @* @await Html.Partial("_PaginationPartial", Model, new ViewDataDictionary { { "PaginationAction", "Sellers" } }) *@
+</table>
+<!-- Pagination controls -->
+
