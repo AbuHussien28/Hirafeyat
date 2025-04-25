@@ -8,5 +8,7 @@ namespace Hirafeyat.AdminServices
     {
         Task<IPagedList<UserSellerAdminViewModel>> GetSellersAsync(int page, int pageSize);
         Task<IPagedList<UserCustomerAdminViewModel>> GetCustomersAsync(int page, int pageSize);
+        Task<bool> ToggleUserStatus(string userName);
+        Task BatchToggleUserStatusAsync(List<string> userNames, bool activate);
     }
 }

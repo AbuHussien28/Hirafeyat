@@ -14,6 +14,16 @@ namespace Hirafeyat.AdminServices
             this.repo = repo;
         }
 
+        public async Task BatchToggleUserStatusAsync(List<string> userNames, bool activate)
+        {
+            await repo.ActivateUsersAsync(userNames, activate);
+            if (activate == true) 
+            {
+                
+            }
+            
+        }
+
         public async Task<IPagedList<UserCustomerAdminViewModel>> GetCustomersAsync(int page, int pageSize)
         {
             var users = await repo.GetCustomersAsync(page, pageSize);
@@ -58,6 +68,11 @@ namespace Hirafeyat.AdminServices
                 users.PageNumber,
                 users.PageSize,
                 users.TotalItemCount);
+        }
+
+        public async Task<bool> ToggleUserStatus(string userName)
+        {
+            return await repo.ToggleUserStatus(userName);
         }
     }
 }
