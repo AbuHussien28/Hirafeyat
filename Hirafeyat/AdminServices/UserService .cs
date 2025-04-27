@@ -17,10 +17,6 @@ namespace Hirafeyat.AdminServices
         public async Task BatchToggleUserStatusAsync(List<string> userNames, bool activate)
         {
             await repo.ActivateUsersAsync(userNames, activate);
-            if (activate == true) 
-            {
-                
-            }
             
         }
 
