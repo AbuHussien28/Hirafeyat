@@ -1,0 +1,58 @@
+﻿@using X.PagedList
+@model IPagedList<Hirafeyat.Models.Product>
+
+@{
+    ViewBag.Title = "Manage Products";
+    int pageNumber = ViewBag.PageNumber;
+    int pageSize = ViewBag.PageSize;
+    int totalProducts = ViewBag.TotalProducts;
+    int totalPages = (int)Math.Ceiling((double)totalProducts / pageSize);
+}
+
+@if (Model == null || !Model.Any())
+{
+    <div class="alert alert-warning">
+        No products found.
+    </div>
+}
+
+<h2>Manage Products</h2>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Seller</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var product in Model)
+        {
+            <tr>
+                <td>@product.Id</td>
+                <td>@product.Title</td>
+                <td>@product.Price</td>
+                <td>@product.SellerId</td> 
+                <td>
+                    <a class="btn btn-info btn-sm" href="@Url.Action("Details", new { id = product.Id })">Details</a>
+                    <a class="btn btn-warning btn-sm" href="@Url.Action("Edit", new { id = product.Id })">Edit</a>
+                    <a class="btn btn-danger btn-sm" href="@Url.Action("Delete", new { id = product.Id })">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div>
+    <ul class="pagination">
+        @for (int i = 1; i <= totalPages; i++)
+        {
+            <li class="page-item @(i == pageNumber ? "active" : "")">
+                <a class="page-link" href="@Url.Action("Index", new { pageNumber = i, pageSize = pageSize, sellerId = ViewBag.SellerId })">@i</a>
+            </li>
+        }
+    </ul>
+</div>

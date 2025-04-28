@@ -32,6 +32,9 @@ namespace Hirafeyat
             builder.Services.AddScoped<IUserService, UserService>();
             builder.Services.AddScoped<IOrderRepositoryAdmin, OrderRepositoryAdmin>();
             builder.Services.AddScoped<IOrderAdminService, OrderAdminService>();
+            builder.Services.AddScoped<IProductRepository, ProductRepository>();
+            builder.Services.AddScoped<AdminServices.IProductService, ProductService>();
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

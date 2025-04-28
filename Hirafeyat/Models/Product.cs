@@ -17,11 +17,11 @@ namespace Hirafeyat.Models
         public string ImageUrl { get; set; }
 
         public DateTime CreatedAt { get; set; } = DateTime.Now;
-
+        public bool IsApproved { get; set; }  // True = Approved, False = Pending/Rejected
         // Foreign Keys
         public int CategoryId { get; set; }
         public Category Category { get; set; }
-//was int now string
+        //was int now string
         public string SellerId { get; set; }
         public ApplicationUser Seller { get; set; }
 

@@ -20,7 +20,7 @@ namespace Hirafeyat.AdminRepository
             var query = _context.Orders
              .Include(o => o.Customer)
              .Include(o => o.Product).ThenInclude(p => p.Seller)
-        .AsQueryable();
+             .AsQueryable();
 
             // 2. إضافة فلترة لو موجودة
             if (!string.IsNullOrEmpty(statusFilter))
