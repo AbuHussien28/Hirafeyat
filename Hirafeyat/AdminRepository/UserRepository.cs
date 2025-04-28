@@ -1,5 +1,4 @@
-﻿using Dapper;
-using Hirafeyat.Models;
+﻿using Hirafeyat.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
