@@ -41,13 +41,14 @@ namespace Hirafeyat.SellerServices
             if (order != null) 
             {
                 order.Status = newStatus;
+                _context.Orders.Update(order);
             }
 
         }
-        public int Save() 
+        public void Save() 
         {
         
-        return _context.SaveChanges();
+         _context.SaveChanges();
         
         }
 

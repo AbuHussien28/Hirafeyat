@@ -6,6 +6,8 @@ using Hirafeyat.Services;
 using System.Data;
 using Hirafeyat.ViewModel;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
+using Hirafeyat.ViewModel.sellerVM;
 
 namespace Hirafeyat.Controllers
 {
@@ -177,13 +179,13 @@ namespace Hirafeyat.Controllers
             return RedirectToAction("Index");
 
         }
-//------------------------------------------------------------------------------
+        //------------------------------------------------------------------------------
 
 
-
+        [Authorize(Roles="Seller")]
         public IActionResult Orders() 
         {
-            var sellerid = user.GetUserId(User);
+            var sellerid = User.FindFirstValue(ClaimTypes.NameIdentifier);
             Console.WriteLine($"Seller ID: {sellerid}");
             var orders = orderService.GetAllOrdersBySellerId(sellerid);
 
@@ -214,5 +216,45 @@ namespace Hirafeyat.Controllers
 
         
         }
+        //brand_name
+        [HttpGet]
+        public async Task<IActionResult> profile() 
+        {
+         
+            var userr= await user.GetUserAsync(User);
+            if(userr == null){ return NotFound(); }
+            var model = new brandvm()
+            {
+          
+
+            };
+            return View(model);
+
+        }
+        //[HttpPost]
+        //public async Task<IActionResult> EditBrandName(brandvm model)
+        //{
+        //    if (!ModelState.IsValid)
+        //        return View(model);
+
+        //    var userr = await user.GetUserAsync(User);
+        //    if (userr == null) return NotFound();
+
+        //    userr.brand_name = model.brand_name;
+        //    var result = await user.UpdateAsync(userr);
+
+        //    if (result.Succeeded)
+        //    {
+        //        return RedirectToAction("Profile"); // رجعيه لصفحة البروفايل بعد التعديل
+        //    }
+
+        //    foreach (var error in result.Errors)
+        //    {
+        //        ModelState.AddModelError("", error.Description);
+        //    }
+
+        //    return View("profile", model);
+        //}
+
     }
 }
