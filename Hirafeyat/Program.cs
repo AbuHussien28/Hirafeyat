@@ -34,6 +34,9 @@ namespace Hirafeyat
             builder.Services.AddScoped<IOrderAdminService, OrderAdminService>();
             builder.Services.AddScoped<IProductRepository, ProductRepository>();
             builder.Services.AddScoped<AdminServices.IProductService, ProductService>();
+            builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+            builder.Services.AddScoped<ICategoryService, CategoryService>();
+
 
             var app = builder.Build();
 

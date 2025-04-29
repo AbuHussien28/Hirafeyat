@@ -8,14 +8,6 @@
     int totalProducts = ViewBag.TotalProducts;
     int totalPages = (int)Math.Ceiling((double)totalProducts / pageSize);
 }
-
-@if (Model == null || !Model.Any())
-{
-    <div class="alert alert-warning">
-        No products found.
-    </div>
-}
-
 <h2>Manage Products</h2>
 
 <table class="table table-bordered table-striped">

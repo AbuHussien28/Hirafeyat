@@ -56,6 +56,20 @@ namespace Hirafeyat.Controllers.Admin
             return View("/Views/AdminProducts/Details.cshtml", product);
         }
         [Route("/Admin/Product/Edit")]
+        [HttpGet]
+        public async Task<IActionResult> Edit(int id)
+        {
+            var product = await _productService.GetProductByIdAsync(id);
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            return View("/Views/AdminProducts/Edit.cshtml", product);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, Product product)
         {
             if (id != product.Id)
@@ -71,6 +85,7 @@ namespace Hirafeyat.Controllers.Admin
 
             return View("/Views/AdminProducts/Edit.cshtml", product);
         }
+        
         [Route("/Admin/Product/DeleteAsync/{id}")]
         public async Task<IActionResult> DeleteAsync(int id)
         {
