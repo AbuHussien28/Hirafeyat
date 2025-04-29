@@ -24,6 +24,6 @@ namespace Hirafeyat.ViewModel.Account
         [Required(ErrorMessage = "Role is required.")]
         public string Role { get; set; }
 
-        public string BrandName { get; set; }
+        //public string BrandName { get; set; }
     }
 }

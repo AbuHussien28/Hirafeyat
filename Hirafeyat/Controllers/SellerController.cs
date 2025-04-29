@@ -225,36 +225,36 @@ namespace Hirafeyat.Controllers
             if(userr == null){ return NotFound(); }
             var model = new brandvm()
             {
-                brand_name = userr.brand_name
+          
 
             };
             return View(model);
 
         }
-        [HttpPost]
-        public async Task<IActionResult> EditBrandName(brandvm model)
-        {
-            if (!ModelState.IsValid)
-                return View(model);
+        //[HttpPost]
+        //public async Task<IActionResult> EditBrandName(brandvm model)
+        //{
+        //    if (!ModelState.IsValid)
+        //        return View(model);
 
-            var userr = await user.GetUserAsync(User);
-            if (userr == null) return NotFound();
+        //    var userr = await user.GetUserAsync(User);
+        //    if (userr == null) return NotFound();
 
-            userr.brand_name = model.brand_name;
-            var result = await user.UpdateAsync(userr);
+        //    userr.brand_name = model.brand_name;
+        //    var result = await user.UpdateAsync(userr);
 
-            if (result.Succeeded)
-            {
-                return RedirectToAction("Profile"); // رجعيه لصفحة البروفايل بعد التعديل
-            }
+        //    if (result.Succeeded)
+        //    {
+        //        return RedirectToAction("Profile"); // رجعيه لصفحة البروفايل بعد التعديل
+        //    }
 
-            foreach (var error in result.Errors)
-            {
-                ModelState.AddModelError("", error.Description);
-            }
+        //    foreach (var error in result.Errors)
+        //    {
+        //        ModelState.AddModelError("", error.Description);
+        //    }
 
-            return View("profile", model);
-        }
+        //    return View("profile", model);
+        //}
 
     }
 }

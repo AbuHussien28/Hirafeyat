@@ -36,7 +36,7 @@ namespace Hirafeyat.Controllers.LoginAndRegister
                     FullName = model.FullName,
                     PasswordHash = model.Password,
                     ProfileImage = model.imagePath,
-                    brand_name= model.BrandName
+                    //brand_name= model.BrandName
                 };
                 IdentityResult result = await userManager.CreateAsync(userFromDb, model.Password);
                 if (result.Succeeded)
