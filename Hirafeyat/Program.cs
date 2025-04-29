@@ -1,3 +1,5 @@
+using Hirafeyat.AdminRepository;
+using Hirafeyat.AdminServices;
 using Hirafeyat.Models;
 using Hirafeyat.SellerServices;
 using Hirafeyat.Services;
@@ -26,9 +28,16 @@ namespace Hirafeyat
                 .AddDefaultTokenProviders();
             //regester service
             builder.Services.AddScoped<IOrderService, OrderService>();
+
             builder.Services.AddScoped<IProductRepository, ProductService>();
             builder.Services.AddScoped<ICategoryRepository, CategoryService>();
 
+
+
+            builder.Services.AddScoped<IUserRepository, UserRepository>();
+            builder.Services.AddScoped<IUserService, UserService>();
+            builder.Services.AddScoped<IOrderRepositoryAdmin, OrderRepositoryAdmin>();
+            builder.Services.AddScoped<IOrderAdminService, OrderAdminService>();
 
             var app = builder.Build();
 
@@ -40,11 +49,15 @@ namespace Hirafeyat
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
-
+            app.UseStaticFiles();
             app.MapStaticAssets();
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Account}/{action=Login}")
+                  //pattern: "{controller=Seller}/{action=Orders}")
+                  //pattern: "{controller=Account}/{action=Login}")
+                 // pattern: "{controller=User}/{action=Sellers}")
+                 pattern: "{controller=AdminOrder}/{action=Index}")
+                //pattern: "{controller=User}/{action=Customers}")
                 //pattern: "{controller=Home}/{action=Index}/{id?}")
                 .WithStaticAssets();
 
