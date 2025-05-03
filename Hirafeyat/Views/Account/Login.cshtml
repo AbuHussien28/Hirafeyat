@@ -35,7 +35,15 @@
 </div>
 
 <div>
+    <p>
+        <a asp-controller="Account" asp-action="ForgotPassword">نسيت كلمة المرور؟</a>
+    </p>
+    <br />
     <a asp-action="Register">Register</a>
+    <a class="btn btn-danger" asp-controller="Account" asp-action="ExternalLogin" asp-route-provider="Google">
+        Login with Google
+    </a>
+
 </div>
 
 @section Scripts {
