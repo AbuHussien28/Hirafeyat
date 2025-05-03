@@ -22,14 +22,14 @@ namespace Hirafeyat.AdminRepository
                 await _context.SaveChangesAsync();
             }
         }
-        public async Task<Product> GetProductByIdAsync(int id)
+        public async Task<Product> GetProductByIdAsync(int id) 
         {
-            return await _context.Products.FirstOrDefaultAsync(p => p.Id == id);
+            return await _context.Products.Include(p => p.Category).Include(p => p.Seller).FirstOrDefaultAsync(p => p.Id == id);
         }
 
         public async Task<IPagedList<Product>> GetProductsAsync(int page, int pageSize, string? sellerId = null)
         {
-            var query = _context.Products.AsQueryable();
+            var query = _context.Products.Include(p => p.Seller).AsQueryable();
 
             if (!string.IsNullOrEmpty(sellerId))
             {

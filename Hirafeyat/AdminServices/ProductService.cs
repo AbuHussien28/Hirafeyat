@@ -1,14 +1,20 @@
-﻿using Hirafeyat.AdminRepository;
+﻿using AutoMapper;
+using Hirafeyat.AdminRepository;
 using Hirafeyat.Models;
+using Hirafeyat.ViewModel.Admin;
 
 namespace Hirafeyat.AdminServices
 {
     public class ProductService : IProductService
     {
         private readonly IProductRepository _productRepository;
-        public ProductService(IProductRepository productRepository)
+        private readonly IMapper _mapper;
+        private readonly ICategoryRepository _categoryRepository;
+        public ProductService(IProductRepository productRepository, ICategoryRepository categoryRepository,IMapper mapper)
         {
             _productRepository = productRepository;
+            _categoryRepository = categoryRepository;
+            _mapper = mapper;
         }
         public async Task DeleteProductAsync(int id)
         {
@@ -40,16 +46,37 @@ namespace Hirafeyat.AdminServices
         {
             return await _productRepository.GetTotalProductsCountAsync(sellerId);
         }
-
-        public async Task UpdateProductAsync(Product product)
+        public async Task UpdateProductAsync(EditProduct vm)
         {
-            var existingProduct = await _productRepository.GetProductByIdAsync(product.Id);
+            var existingProduct = await _productRepository.GetProductByIdAsync(vm.Id);
             if (existingProduct == null)
+                throw new KeyNotFoundException($"Product with ID {vm.Id} not found");
+
+            // handle image upload
+            if (vm.ImageFile != null && vm.ImageFile.Length > 0)
             {
-                throw new KeyNotFoundException($"Product with ID {product.Id} not found");
+                string uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images");
+                Directory.CreateDirectory(uploadsFolder);
+
+                var fileName = Guid.NewGuid().ToString() + Path.GetExtension(vm.ImageFile.FileName);
+                var filePath = Path.Combine(uploadsFolder, fileName);
+
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await vm.ImageFile.CopyToAsync(stream);
+                }
+
+                vm.ImageUrl = "/images/" + fileName;
+            }
+            else
+            {
+                vm.ImageUrl = existingProduct.ImageUrl; 
             }
 
-            await _productRepository.UpdateProductAsync(product);
+            // Map updated values
+            _mapper.Map(vm, existingProduct);
+
+            await _productRepository.UpdateProductAsync(existingProduct);
             await _productRepository.SaveAsync();
         }
     }

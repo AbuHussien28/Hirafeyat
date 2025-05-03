@@ -37,7 +37,7 @@ namespace Hirafeyat
             builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
             builder.Services.AddScoped<ICategoryService, CategoryService>();
 
-
+            builder.Services.AddAutoMapper(typeof(MappingConfigs));
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

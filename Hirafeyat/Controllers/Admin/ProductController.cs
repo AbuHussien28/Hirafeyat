@@ -9,6 +9,8 @@ using Microsoft.EntityFrameworkCore;
 using X.PagedList.EntityFramework;
 using System.Threading.Tasks;
 using System.Data.Entity;
+using Hirafeyat.ViewModel.Admin;
+using AutoMapper;
 namespace Hirafeyat.Controllers.Admin
 {
     //[Authorize(Roles = "Admin")]
@@ -17,13 +19,19 @@ namespace Hirafeyat.Controllers.Admin
     {
         private readonly IProductService _productService;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IMapper _mapper;
+        private readonly ICategoryService _categoryService;
 
         public ProductController(
             IProductService productService,
-            UserManager<ApplicationUser> userManager)
+            UserManager<ApplicationUser> userManager,
+            IMapper mapper,
+            ICategoryService categoryService)
         {
             _productService = productService;
             _userManager = userManager;
+            _mapper = mapper;
+            _categoryService = categoryService;
         }
 
         [Route("/Admin/Product/Index")]
@@ -60,31 +68,58 @@ namespace Hirafeyat.Controllers.Admin
         public async Task<IActionResult> Edit(int id)
         {
             var product = await _productService.GetProductByIdAsync(id);
-            if (product == null)
-            {
-                return NotFound();
-            }
+            if (product == null) return NotFound();
 
-            return View("/Views/AdminProducts/Edit.cshtml", product);
+            var vm = _mapper.Map<EditProduct>(product);
+
+            // Fill SelectLists
+            var categories = _categoryService.GetAll();
+            vm.Categories = categories.Select(c => new SelectListItem
+            {
+                Value = c.Id.ToString(),
+                Text = c.Name
+            }).ToList();
+
+            vm.Statuses = Enum.GetValues(typeof(productStatus))
+                              .Cast<productStatus>()
+                              .Select(s => new SelectListItem
+                              {
+                                  Value = ((int)s).ToString(),
+                                  Text = s.ToString()
+                              }).ToList();
+
+            return View("/Views/AdminProducts/Edit.cshtml", vm);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, Product product)
+        public async Task<IActionResult> SaveEdit(int Id,EditProduct vm)
         {
-            if (id != product.Id)
+            if (!ModelState.IsValid)
             {
-                return BadRequest();
-            }
+                // Refill dropdowns if validation fails
+                var categories = _categoryService.GetAll();
+                vm.Categories = categories.Select(c => new SelectListItem
+                {
+                    Value = c.Id.ToString(),
+                    Text = c.Name
+                }).ToList();
 
-            if (ModelState.IsValid)
-            {
-                await _productService.UpdateProductAsync(product);
-                return RedirectToAction(nameof(Index));
-            }
+                vm.Statuses = Enum.GetValues(typeof(productStatus))
+                                  .Cast<productStatus>()
+                                  .Select(s => new SelectListItem
+                                  {
+                                      Value = ((int)s).ToString(),
+                                      Text = s.ToString()
+                                  }).ToList();
+                return View("/Views/AdminProducts/Edit.cshtml", vm);
 
-            return View("/Views/AdminProducts/Edit.cshtml", product);
+            }
+            await _productService.UpdateProductAsync(vm);
+            return RedirectToAction("Index");
         }
+
+       
         
         [Route("/Admin/Product/DeleteAsync/{id}")]
         public async Task<IActionResult> DeleteAsync(int id)
