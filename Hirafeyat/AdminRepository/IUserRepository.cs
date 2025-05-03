@@ -3,7 +3,7 @@ using X.PagedList;
 
 namespace Hirafeyat.AdminRepository
 {
-    public interface IUserRepository
+    public interface IUserRepository : IRepository
     {
         Task<IPagedList<ApplicationUser>> GetSellersAsync(int page, int pageSize);
         Task<IPagedList<ApplicationUser>>GetCustomersAsync(int page, int pageSize);

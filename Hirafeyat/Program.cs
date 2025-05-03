@@ -41,6 +41,7 @@ namespace Hirafeyat
             builder.Services.AddScoped<IUserService, UserService>();
             builder.Services.AddScoped<IOrderRepositoryAdmin, OrderRepositoryAdmin>();
             builder.Services.AddScoped<IOrderAdminService, OrderAdminService>();
+
             builder.Services.AddTransient<IEmailSender, EmailSender>();
             builder.Services.AddAuthentication()
     .AddGoogle(options =>
@@ -51,6 +52,12 @@ namespace Hirafeyat
 
     });
             
+            builder.Services.AddScoped<IProductRepository, ProductRepository>();
+            builder.Services.AddScoped<AdminServices.IProductService, ProductService>();
+            builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+            builder.Services.AddScoped<ICategoryService, CategoryService>();
+
+            builder.Services.AddAutoMapper(typeof(MappingConfigs));
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

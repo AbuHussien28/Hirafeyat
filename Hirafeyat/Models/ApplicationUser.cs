@@ -4,6 +4,7 @@ namespace Hirafeyat.Models
 {
     public class ApplicationUser:IdentityUser
     {
+        [Display(Name = "Seller Name")]
         public string FullName { get; set; }
         public string Address { get; set; }
         public string ProfileImage { get; set; }
