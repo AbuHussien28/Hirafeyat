@@ -17,6 +17,7 @@ namespace Hirafeyat.Models
         public string ImageUrl { get; set; }
         [Required]
         public int Quentity { get; set; }
+
         public DateTime CreatedAt { get; set; } = DateTime.Now;
 
         // Foreign Keys

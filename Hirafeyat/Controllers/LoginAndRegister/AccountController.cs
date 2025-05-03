@@ -203,10 +203,8 @@ namespace Hirafeyat.Controllers.LoginAndRegister
                 TempData["Success"] = "Brand Name updated successfully!";
                 return RedirectToAction("UpdateBrandName");
             }
-
             return View(model);
         }
-
         #endregion
         #region ForGet Password
         [HttpGet]
