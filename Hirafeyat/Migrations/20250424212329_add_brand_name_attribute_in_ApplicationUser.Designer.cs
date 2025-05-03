@@ -4,6 +4,7 @@ using Hirafeyat.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Hirafeyat.Migrations
 {
     [DbContext(typeof(HirafeyatContext))]
-    partial class HirafeyatContextModelSnapshot : ModelSnapshot
+    [Migration("20250424212329_add_brand_name_attribute_in_ApplicationUser")]
+    partial class add_brand_name_attribute_in_ApplicationUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
