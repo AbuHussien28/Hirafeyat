@@ -10,7 +10,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Register">
+        <form asp-action="Register" enctype="multipart/form-data" method="post">
             <div asp-validation-summary="All" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="FullName" class="control-label"></label>
@@ -38,9 +38,9 @@
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="imagePath" class="control-label"></label>
-                <input asp-for="imagePath" class="form-control" />
-                <span asp-validation-for="imagePath" class="text-danger"></span>
+                <label asp-for="ImageFile" class="control-label"></label>
+                <input asp-for="ImageFile" type="file" class="form-control" onchange="previewImage(event)" />
+                <img id="imagePreview" src="#" alt="Image Preview" style="max-width: 200px; display: none;" />
             </div>
            
             @* <div class="form-group"> *@
@@ -60,16 +60,18 @@
                 <span asp-validation-for="Address" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label class="control-label">Select Role</label><br />
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="Role" value="Customer" id="customerRadio" />
-                    <label class="form-check-label" for="customerRadio">Customer</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="Role" value="Seller" id="sellerRadio" />
-                    <label class="form-check-label" for="sellerRadio">Seller</label>
-                </div>
+                <label asp-for="Role" class="control-label"></label>
+                <select asp-for="Role" class="form-control" id="roleSelect">
+                    <option value="">Select Role</option>
+                    <option value="Seller">Seller</option>
+                    <option value="Customer">Customer</option>
+                </select>
                 <span asp-validation-for="Role" class="text-danger"></span>
+            </div>
+            <div class="form-group" id="brandNameGroup" style="display:none">
+                <label asp-for="BrandName" class="control-label"></label>
+                <input asp-for="BrandName" class="form-control" />
+                <span asp-validation-for="BrandName" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
@@ -84,4 +86,21 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        document.getElementById("roleSelect").addEventListener("change", function () {
+            const selectedRole = this.value;
+            const brandDiv = document.getElementById("brandNameGroup");
+            brandDiv.style.display = selectedRole === "Seller" ? "block" : "none";
+        });
+             function previewImage(event) {
+            var input = event.target;
+            var reader = new FileReader();
+            reader.onload = function () {
+                var img = document.getElementById('imagePreview');
+                img.src = reader.result;
+                img.style.display = 'block';
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
+    </script>
 }

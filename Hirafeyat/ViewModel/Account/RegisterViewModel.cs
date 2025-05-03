@@ -13,17 +13,16 @@ namespace Hirafeyat.ViewModel.Account
         [DataType(DataType.Password)]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
-        [DataType(DataType.EmailAddress)]
+        [EmailAddress(ErrorMessage = "Invalid Email Address")]
         public string Email { get; set; }
-        [DataType(DataType.ImageUrl)]
-        public string imagePath { get; set; }
+        public IFormFile ImageFile { get; set; } 
+        public string? imagePath { get; set; } 
         [DataType(DataType.PhoneNumber)]
         public string PhoneNumber { get; set; }
         [Required(ErrorMessage ="Address Is Required")]
         public string Address { get; set; }
         [Required(ErrorMessage = "Role is required.")]
         public string Role { get; set; }
-
-        //public string BrandName { get; set; }
+        public string? BrandName { get; set; }
     }
 }

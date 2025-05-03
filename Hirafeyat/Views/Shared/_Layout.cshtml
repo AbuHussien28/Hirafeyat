@@ -31,7 +31,29 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
+                     
+
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Sellers">Sellers</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Customers">Customers</a>
+                            </li>
+                        }
+                        @if (User.IsInRole("Seller"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="UpdateBrandName">UpdateBrandName</a>
+                            </li>
+                          
+                        }
                         <li class="nav-item">
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="LogOut">LogOut</a>
+                            }
                             <a class="nav-link text-dark" asp-area="" asp-controller="Role" asp-action="NewRole">NewRole</a>
                         </li>
 
