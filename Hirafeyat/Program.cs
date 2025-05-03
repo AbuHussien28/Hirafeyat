@@ -1,5 +1,6 @@
 using Hirafeyat.AdminRepository;
 using Hirafeyat.AdminServices;
+using Hirafeyat.EmailServices;
 using Hirafeyat.Models;
 using Hirafeyat.SellerServices;
 using Hirafeyat.Services;
@@ -13,7 +14,9 @@ namespace Hirafeyat
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-
+            var googleAuthSettings = builder.Configuration.GetSection("GoogleAuthentication");
+            string clientId = googleAuthSettings["ClientId"];
+            string clientSecret = googleAuthSettings["ClientSecret"];
             // Add services to the container.
             builder.Services.AddControllersWithViews();
             builder.Services.AddDbContext<HirafeyatContext>(options =>
@@ -32,6 +35,16 @@ namespace Hirafeyat
             builder.Services.AddScoped<IUserService, UserService>();
             builder.Services.AddScoped<IOrderRepositoryAdmin, OrderRepositoryAdmin>();
             builder.Services.AddScoped<IOrderAdminService, OrderAdminService>();
+            builder.Services.AddTransient<IEmailSender, EmailSender>();
+            builder.Services.AddAuthentication()
+    .AddGoogle(options =>
+    {
+        options.ClientId = clientId;
+        options.ClientSecret = clientSecret;
+        options.CallbackPath = "/signin-google";
+
+    });
+            
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -47,9 +60,9 @@ namespace Hirafeyat
             app.MapControllerRoute(
                 name: "default",
                   //pattern: "{controller=Seller}/{action=Orders}")
-                  //pattern: "{controller=Account}/{action=Login}")
-                 // pattern: "{controller=User}/{action=Sellers}")
-                 pattern: "{controller=AdminOrder}/{action=Index}")
+                  pattern: "{controller=Account}/{action=Login}")
+                // pattern: "{controller=User}/{action=Sellers}")
+                //pattern: "{controller=AdminOrder}/{action=Index}")
                 //pattern: "{controller=User}/{action=Customers}")
                 //pattern: "{controller=Home}/{action=Index}/{id?}")
                 .WithStaticAssets();
