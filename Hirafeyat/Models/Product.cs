@@ -20,6 +20,8 @@ namespace Hirafeyat.Models
         [Display(Name = "Product Image")]
 
         public string ImageUrl { get; set; }
+        [Required]
+        public int Quentity { get; set; }
 
         public DateTime CreatedAt { get; set; } = DateTime.Now;
         public bool IsApproved { get; set; }  
