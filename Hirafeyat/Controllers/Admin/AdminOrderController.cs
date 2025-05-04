@@ -17,7 +17,7 @@ namespace Hirafeyat.Controllers.Admin
     string productFilter,string statusFilter,int page=1,int pageSize=10)
         {
             ViewData["PaginationAction"] = "Index";
-            ViewData["StatusFilter"] = statusFilter; // علشان يرجع الحالة المختارة للـ View
+            ViewData["StatusFilter"] = statusFilter; 
             ViewData["StatusFilter"] = statusFilter;
             ViewData["CategoryFilter"] = categoryFilter;
             ViewData["ProductFilter"] = productFilter;

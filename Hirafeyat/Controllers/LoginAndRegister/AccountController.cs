@@ -169,6 +169,7 @@ namespace Hirafeyat.Controllers.LoginAndRegister
         #endregion
         #region UpdateBrandName
         [Authorize(Roles = "Seller")]
+        [HttpGet]
         public async Task<IActionResult> UpdateBrandName()
         {
             var user = await userManager.GetUserAsync(User);

@@ -44,9 +44,9 @@
                         }
                         @if (User.IsInRole("Seller"))
                         {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="UpdateBrandName">UpdateBrandName</a>
-                            </li>
+                            <li class="nav-item"> 
+                               <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="UpdateBrandName">UpdateBrandName</a> 
+                           </li> 
                           
                         }
                         <li class="nav-item">
@@ -54,58 +54,7 @@
                             {
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="LogOut">LogOut</a>
                             }
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Role" asp-action="NewRole">NewRole</a>
                         </li>
-
-
-                        <!-- في الجزء العلوي الأيمن من الـ Navbar -->
-                        @* <ul class="navbar-nav ml-auto"> *@
-                        @*     <li class="nav-item dropdown"> *@
-                        @*         <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> *@
-                        @*             <i class="fas fa-bars"></i> *@
-                        @*         </a> *@
-                        @*         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="profileDropdown"> *@
-                        @*             @{ *@
-                        @*                 var user = await UserManager.GetUserAsync(User); *@
-                        @*                 var profileImage = user?.ProfileImage ?? "/imges/default-profile.png"; *@
-                        @*             } *@
-
-                                 
-                        @*             <div class="text-center p-2"> *@
-                        @*                 <img src="@profileImage" class="rounded-circle" style="width: 80px; height: 80px; object-fit: cover;" /> *@
-                        @*             </div> *@
-
-                                   
-                        @*             <a class="dropdown-item" href="#" data-toggle="modal" data-target="#changePictureModal"> *@
-                        @*                 <i class="fas fa-camera mr-2"></i> Change Picture *@
-                        @*             </a> *@
-
-                                    
-                        @*             <a class="dropdown-item" href="#" data-toggle="modal" data-target="#changeInfoModal"> *@
-                        @*                 <i class="fas fa-user-edit mr-2"></i> Change Personal Info *@
-                        @*             </a> *@
-
-                                    
-                        @*             <a class="dropdown-item" href="#" data-toggle="modal" data-target="#changePasswordModal"> *@
-                        @*                 <i class="fas fa-key mr-2"></i> Change Password *@
-                        @*             </a> *@
-                        @*         </div> *@
-                        @*     </li> *@
-                        @* </ul> *@
-
-                         <li class="nav-item"> 
-                             <a class="nav-link" asp-action="ChangeProfileInfo" asp-controller="Profile"> 
-                                 <i class="fas fa-user-edit"></i> Edit Profile 
-                             </a>
-                         </li> 
-
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Customers">Customers</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="ToggleUserStatus">Customers Active Acount</a>
-                        </li>
-
                     </ul>
                 </div>
             </div>
