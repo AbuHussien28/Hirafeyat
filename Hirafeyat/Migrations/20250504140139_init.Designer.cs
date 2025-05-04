@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Hirafeyat.Migrations
 {
     [DbContext(typeof(HirafeyatContext))]
-    [Migration("20250424212329_add_brand_name_attribute_in_ApplicationUser")]
-    partial class add_brand_name_attribute_in_ApplicationUser
+    [Migration("20250504140139_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -32,6 +32,9 @@ namespace Hirafeyat.Migrations
 
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
+
+                    b.Property<DateTime?>("AccountCreatedDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Address")
                         .IsRequired()
@@ -88,10 +91,6 @@ namespace Hirafeyat.Migrations
                     b.Property<string>("UserName")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("brand_name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
